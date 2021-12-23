@@ -9,5 +9,4 @@ jobs:
     steps:
       - name: Config API Action
         id: hello
-        uses: rishnair/javascript-action@v1
-        
+        uses: rishnair/javascript-action@v2
