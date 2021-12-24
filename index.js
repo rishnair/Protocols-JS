@@ -1,7 +1,9 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const fs = require('fs');
-const fetch = require('node-fetch');
+// const fetch = require('node-fetch');
+var request = require('request');
+
 
 
 try {
@@ -21,19 +23,20 @@ newJSON["update_mask"] = {
 newJSON["tracking_plan"] = payloadJSON;
 var json = JSON.stringify(newJSON);
 
-var requestOptions = {
-    method: 'PUT',
-    headers: {
-        'Authorization': 'Bearer lz76O8KXwjMeYnnvk3aKlCas721IFP-7x2V7s_oN8kc.DwF1Wi8UGqZ12AbVJFXY_Aa7ebBBUiCdXwXUiyy8xvk',
-        'Content-Type': 'application/json'
-      },
+var options = {
+    'method': 'PUT',
+    'url': 'https://platform.segmentapis.com/v1beta/workspaces/protocols-diffs/tracking-plans/rs_21k7cGxAiOsvxfxBMXdR2Z1iOGr',
+    'headers': {
+      'Authorization': 'Bearer lz76O8KXwjMeYnnvk3aKlCas721IFP-7x2V7s_oN8kc.DwF1Wi8UGqZ12AbVJFXY_Aa7ebBBUiCdXwXUiyy8xvk',
+      'Content-Type': 'application/json'
+    },
     body: json
-  };
-  
-  const response = fetch("https://platform.segmentapis.com/v1beta/workspaces/protocols-diffs/tracking-plans/rs_21k7cGxAiOsvxfxBMXdR2Z1iOGr", requestOptions)
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
+    };
+
+request(options, function (error, response) {
+    if (error) throw new Error(error);
+    console.log(response.body);
+    });
 
 } catch (error) {
   core.setFailed(error.message);
